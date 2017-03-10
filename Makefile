@@ -6,7 +6,7 @@ else
 	OS := centos7
 endif
 
-BASE_IMAGE_NAME = "base"
+BASE_IMAGE_NAME = "builder-base"
 
 script_env = \
 	SKIP_SQUASH=$(SKIP_SQUASH)                      \

@@ -13,7 +13,7 @@ test -z "$BASE_IMAGE_NAME" && {
     BASE_IMAGE_NAME="${BASE_DIR_NAME#s2i-}"
 }
 
-NAMESPACE="openshift/"
+NAMESPACE="core/"
 
 # Cleanup the temporary Dockerfile created by docker build with version
 trap "rm -f ${DOCKERFILE_PATH}.version" SIGINT SIGQUIT EXIT
@@ -38,9 +38,12 @@ function docker_build_with_version {
 function squash {
   # FIXME: We have to use the exact versions here to avoid Docker client
   #        compatibility issues
-  easy_install -q --user docker_py==1.6.0 docker-scripts==0.4.4
+  pip install docker-squash
   base=$(awk '/^FROM/{print $2}' $1)
-  ${HOME}/.local/bin/docker-scripts squash -f $base ${IMAGE_NAME}
+  old_imageid=$(docker inspect --format='{{.Id}}' ${IMAGE_NAME})
+  docker-squash -f $base -t ${IMAGE_NAME} ${IMAGE_NAME}
+  echo "-> Removing obsoleted image ..."
+  docker rmi $old_imageid
 }
 
 IMAGE_NAME="${NAMESPACE}${BASE_IMAGE_NAME}-${OS}"

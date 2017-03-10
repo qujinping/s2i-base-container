@@ -1,8 +1,7 @@
 # This image is the base image for all OpenShift v3 language Docker images.
-FROM centos:7
+FROM core/centos:7.3
 
-MAINTAINER Jakub Hadvig <jhadvig@redhat.com>
-
+MAINTAINER Jakub Hadvig <jhadvig@redhat.com> 
 LABEL \
       # Location of the STI scripts inside the image.
       io.openshift.s2i.scripts-url=image:///usr/libexec/s2i \
@@ -15,6 +14,7 @@ ENV \
     # Path to be used in other layers to place s2i scripts into
     STI_SCRIPTS_PATH=/usr/libexec/s2i \
     # The $HOME is not set by default, but some applications needs this variable
+    APPROOT=/opt/app-root \
     HOME=/opt/app-root/src \
     PATH=/opt/app-root/src/bin:/opt/app-root/bin:$PATH
 
@@ -68,6 +68,11 @@ RUN rpmkeys --import file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 && \
   yum clean all -y && \
   useradd -u 1001 -r -g 0 -d ${HOME} -s /sbin/nologin \
       -c "Default Application User" default && \
+  mkdir -p /opt/app-root && \
+  mkdir -p /opt/app-root/etc && \
+  mkdir -p /opt/app-root/data && \
+  mkdir -p /opt/app-root/bin && \
+  mkdir -p /opt/app-root/libs && \
   chown -R 1001:0 /opt/app-root
 
 # Copy executable utilities.
