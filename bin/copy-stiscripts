@@ -1,0 +1,22 @@
+#!/bin/sh
+# Fix permissions on the given directory to allow group read/write of
+
+DEFAULT_RUN_SCRIPT_FILE=$STI_SCRIPTS_PATH/run
+DEFAULT_USAGE_SCRIPT_FILE=$STI_SCRIPTS_PATH/usage
+
+RUN_SCRIPT_FILE=/tmp/scripts/run
+USAGE_SCRIPT_FILE=/tmp/scripts/usage
+
+if [ -f "$RUN_SCRIPT_FILE" ]
+then
+    cp $RUN_SCRIPT_FILE $1
+else
+    cp $DEFAULT_RUN_SCRIPT_FILE $1
+fi
+
+if [ -f "$USAGE_SCRIPT_FILE" ]
+then
+    cp $USAGE_SCRIPT_FILE $1
+else
+    cp $DEFAULT_USAGE_SCRIPT_FILE $1
+fi

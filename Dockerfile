@@ -73,6 +73,7 @@ RUN rpmkeys --import file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 && \
   mkdir -p /opt/app-root/data && \
   mkdir -p /opt/app-root/bin && \
   mkdir -p /opt/app-root/libs && \
+  mkdir -p /opt/app-root/scripts && \
   chown -R 1001:0 /opt/app-root
 
 # Copy executable utilities.
