@@ -13,8 +13,6 @@ test -z "$BASE_IMAGE_NAME" && {
     BASE_IMAGE_NAME="${BASE_DIR_NAME#s2i-}"
 }
 
-NAMESPACE="core/"
-
 # Cleanup the temporary Dockerfile created by docker build with version
 trap "rm -f ${DOCKERFILE_PATH}.version" SIGINT SIGQUIT EXIT
 
@@ -40,10 +38,7 @@ function squash {
   #        compatibility issues
   pip install docker-squash
   base=$(awk '/^FROM/{print $2}' $1)
-  old_imageid=$(docker inspect --format='{{.Id}}' ${IMAGE_NAME})
-  docker-squash -f $base -t ${IMAGE_NAME} ${IMAGE_NAME}
-  echo "-> Removing obsoleted image ..."
-  docker rmi $old_imageid
+  docker-squash -f $base ${IMAGE_NAME}
 }
 
 IMAGE_NAME="${NAMESPACE}${BASE_IMAGE_NAME}-${OS}"

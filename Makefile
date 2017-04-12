@@ -6,6 +6,7 @@ else
 	OS := centos7
 endif
 
+NAMESPACE = "core/"
 BASE_IMAGE_NAME = "builder-base"
 
 script_env = \
@@ -13,6 +14,7 @@ script_env = \
 	VERSIONS="$(VERSIONS)"                          \
 	OS=$(OS)                                        \
 	VERSION=$(VERSION)                              \
+	NAMESPACE=$(NAMESPACE)              \
 	BASE_IMAGE_NAME=$(BASE_IMAGE_NAME)              \
 	OPENSHIFT_NAMESPACES="$(OPENSHIFT_NAMESPACES)"
 
