@@ -1,5 +1,5 @@
 # This image is the base image for all OpenShift v3 language Docker images.
-FROM core/centos:7.3
+FROM core/centos:7
 
 MAINTAINER Jakub Hadvig <jhadvig@redhat.com> 
 LABEL \
