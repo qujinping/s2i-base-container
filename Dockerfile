@@ -50,6 +50,7 @@ RUN rpmkeys --import file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 && \
   mariadb-devel \
   mariadb-libs \
   openssl-devel \
+  nss_wrapper \
   patch \
   postgresql-devel \
   procps-ng \
@@ -63,6 +64,8 @@ RUN rpmkeys --import file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 && \
   zlib-devel" && \
   mkdir -p ${HOME}/.pki/nssdb && \
   chown -R 1001:0 ${HOME}/.pki && \
+  yum -y install epel-release && \
+  yum update -y && \
   yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
   rpm -V $INSTALL_PKGS && \
   yum clean all -y && \
